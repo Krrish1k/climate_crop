@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Smart Crop Recommendation 🌱</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Smart Crop Recommendation Tool 🌱</h2>
+
+        <form method="POST" action="/predict">
+            <label>City:</label>
+            <input type="text" name="city" placeholder="Enter your city" required>
+
+            <label>Nitrogen (N):</label>
+            <input type="number" name="nitrogen" placeholder="Enter soil Nitrogen value" required>
+
+            <label>Phosphorus (P):</label>
+            <input type="number" name="phosphorus" placeholder="Enter soil Phosphorus value" required>
+
+            <label>Potassium (K):</label>
+            <input type="number" name="potassium" placeholder="Enter soil Potassium value" required>
+
+            <label>pH:</label>
+            <input type="number" step="0.1" name="ph" placeholder="Enter soil pH value" required>
+
+            <button type="submit">Get Recommendation</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            <div class="section">
+                <strong>{{ prediction }}</strong>
+            </div>
+
+            {% if weather %}
+            <div class="section">
+                <strong>Weather:</strong>
+                Temperature: {{ weather.temp }}°C,
+                Humidity: {{ weather.humidity }}%,
+                Rainfall: {{ weather.rainfall }} mm
+            </div>
+            {% endif %}
+
+            {% if soil %}
+            <div class="section">
+                <strong>Soil Data:</strong>
+                N: {{ soil.nitrogen }},
+                P: {{ soil.phosphorus }},
+                K: {{ soil.potassium }},
+                pH: {{ soil.ph }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
